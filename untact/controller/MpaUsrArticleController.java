@@ -1,8 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +15,6 @@ public class MpaUsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	
-
 	/////////// 글쓰기/////////////
 	@RequestMapping("/mpaUsr/article/doWrite")
 	@ResponseBody
@@ -32,10 +27,7 @@ public class MpaUsrArticleController {
 			return new ResultData("F-2", "내용을 입력해주세요.");
 		}
 
-		int id = articleService.writeArticle(title, body);
-		Article article = articleService.getArticleById(id);
-
-		return new ResultData("S-1", id + "번 글이 작성되었습니다.", "article", article);
+		return articleService.writeArticle(title, body); 
 	}
 
 	/////////// 수정/////////////
@@ -52,14 +44,16 @@ public class MpaUsrArticleController {
 		if (Util.isEmpty(body)) {
 			return new ResultData("F-3", "내용을 입력해주세요.");
 		}
-		////////
-		boolean modified = articleService.ModifyArticle(id, title, body);
 
-		if (modified == false) {
-			return new ResultData("S-1", id + "번 글이 존재하지 않습니다.", "id", id);
+		Article article = articleService.getArticleById(id);
+
+		if (article == null) {
+			return new ResultData("F-4", "존재하지 않는 게시물 번호 입니다.");
 		}
+		/////// if end
 
-		return new ResultData("S-1", id + "번 글이 수정되었습니다.", "article", articleService.getArticleById(id));
+		return articleService.ModifyArticle(id, title, body);
+
 	}
 
 	/////////// 삭제////////////
@@ -71,14 +65,7 @@ public class MpaUsrArticleController {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 		////////
-		boolean deleted = articleService.deleteArticleById(id);
-
-		if (deleted == false) {
-			return new ResultData("S-1", id + "번 글이 존재하지 않습니다.", "id", id);
-		}
-
-		return new ResultData("S-1", id + "번 글이 삭제되었습니다.", "id", id);
-
+		return articleService.deleteArticleById(id);
 	}
 
 	/////////// 글 show////////////
@@ -99,5 +86,4 @@ public class MpaUsrArticleController {
 		return new ResultData("S-1", article.getId() + "번 글 입니다.", "article", article);
 	}
 
-	
 }// mpaUsrArticleController - end
