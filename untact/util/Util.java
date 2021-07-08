@@ -1,5 +1,6 @@
 package com.sbs.untact.util;
 
+
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -146,10 +147,6 @@ public class Util {
 			String strData = (String) data;
 
 			return strData.trim().length() == 0;
-		} else if (data instanceof Integer) {
-			Integer integerData = (Integer) data;
-
-			return integerData != 0;
 		} else if (data instanceof List) {
 			List listData = (List) data;
 
@@ -160,7 +157,7 @@ public class Util {
 			return mapData.isEmpty();
 		}
 
-		return true;
+		return false;
 	}
 
 	public static <T> T ifEmpty(T data, T defaultValue) {
@@ -231,7 +228,8 @@ public class Util {
 	}
 
 	public static List<Integer> getListDividedBy(String str, String divideBy) {
-		return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
+		return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim()))
+				.collect(Collectors.toList());
 	}
 
 	public static boolean delteFile(String filePath) {
