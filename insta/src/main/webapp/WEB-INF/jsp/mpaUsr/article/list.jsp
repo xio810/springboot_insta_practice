@@ -101,13 +101,13 @@
 			</div>
 
 		</header>
-		
+
 		<div class="title-bar">
 			<div class="mx-auto container">
-				<span><i class="fas fa-home"></i></span>
-				<span>HOME</span>
+				<span><i class="far fa-clipboard"></i></span>
+				<span>ARTICLE LIST</span>
 			</div>
 		</div>
 	</div>
 </body>
-</html>
+</html> 

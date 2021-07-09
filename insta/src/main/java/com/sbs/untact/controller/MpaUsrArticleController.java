@@ -68,6 +68,12 @@ public class MpaUsrArticleController {
 		return articleService.deleteArticleById(id);
 	}
 
+	///////////show////////////
+	@RequestMapping("/mpaUsr/article/list")
+	public String showList(int boardId) {
+		return "mpaUsr/article/list";
+	}
+	
 	/////////// 글 show////////////
 	@RequestMapping("/mpaUsr/article/getArticle")
 	@ResponseBody
