@@ -52,7 +52,7 @@ public class MpaUsrArticleController {
 		}
 		/////// if end
 
-		return articleService.ModifyArticle(id, title, body);
+		return articleService.modifyArticle(id, title, body);
 
 	}
 

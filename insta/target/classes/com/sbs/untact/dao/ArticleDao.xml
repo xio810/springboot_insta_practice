@@ -8,6 +8,11 @@
 		SELECT *
 		FROM article AS A
 		WHERE A.id = #{id}
+		AND A.delStatus = 0
+	</select>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
 	</select>
 
 	<update id="modifyArticle">
@@ -22,14 +27,15 @@
 	<insert id="writeArticle">
 		INSERT INTO article
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		boardId = #{boardId},
 		memberId = #{memberId},
 		title = #{title},
 		body = #{body}
 	</insert>
 
-	<update id="">
+	<update id="deleteArticleById">
 		UPDATE article
 		SET delStatus = 1,
 		delDate = NOW()
