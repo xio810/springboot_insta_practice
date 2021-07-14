@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="<span><i class='fas fa-clipboard'></i></span> <span>board</span>" />
+<c:set var="pageTitle" value="<span><i class='fas fa-clipboard'></i></span> <span>${board.name} Article List</span>" />
 
 
 <%@ include file="../common/head.jspf"%>

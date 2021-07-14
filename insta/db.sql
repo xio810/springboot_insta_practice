@@ -99,12 +99,12 @@ CREATE TABLE board (
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`name` = '공지사항',
+`name` = 'NOTICE',
 `code` = 'notice';
 
 ## 자유 게시판 생성
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`name` = '자유',
+`name` = 'FREE',
 `code` = 'free';
