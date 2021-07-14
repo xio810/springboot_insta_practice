@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
 
 @Mapper
 public interface ArticleDao {
@@ -29,5 +30,7 @@ public interface ArticleDao {
 	 * update article set delStatus = 1, delDate = now(), where id = #{id}
 	 */
 	void deleteArticleById(@Param("id") int id);
+
+	Board getBoardById(@Param("id") int id);
 
 }//
