@@ -19,6 +19,11 @@ public class MpaUsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
+	private String msgAndBack(HttpServletRequest req, String msg) {
+		req.setAttribute("msg", msg);
+		return "common/redirect";
+	}
+	
 	/////////// 글쓰기/////////////
 	@RequestMapping("/mpaUsr/article/doWrite")
 	@ResponseBody
@@ -31,7 +36,7 @@ public class MpaUsrArticleController {
 			return new ResultData("F-2", "내용을 입력해주세요.");
 		}
 
-		return articleService.writeArticle(title, body); 
+		return articleService.writeArticle(title, body);
 	}
 
 	/////////// 수정/////////////
@@ -72,23 +77,23 @@ public class MpaUsrArticleController {
 		return articleService.deleteArticleById(id);
 	}
 
-	///////////show////////////
+	/////////// show////////////
 	@RequestMapping("/mpaUsr/article/list")
 	public String showList(HttpServletRequest req, int boardId) {
-		
+
 		Board board = articleService.getBoardById(boardId);
-				
-		if ( board == null ) {
-			req.setAttribute("msg", boardId + "번은 존재하지 않는 게시판 입니다.");
-			return "common/redirect";
+
+		if (board == null) {
+			return msgAndBack(req, boardId + "번 게시판이 존재하지 않습니다.");
 		}
-		
+
 		req.setAttribute("board", board);
 //		model.addAttribute("board", board);
-				
+
 		return "mpaUsr/article/list";
 	}
-	
+
+
 	/////////// 글 show////////////
 	@RequestMapping("/mpaUsr/article/getArticle")
 	@ResponseBody
