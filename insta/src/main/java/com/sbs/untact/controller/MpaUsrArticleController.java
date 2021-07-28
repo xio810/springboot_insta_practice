@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,9 +20,16 @@ public class MpaUsrArticleController {
 
 	private String msgAndBack(HttpServletRequest req, String msg) {
 		req.setAttribute("msg", msg);
+		req.setAttribute("historyBack", true);
 		return "common/redirect";
 	}
-	
+
+	private String msgAndReplace(HttpServletRequest req, String msg,  String replaceUrl) {
+		req.setAttribute("msg", msg);
+		req.setAttribute("replaceUrl", replaceUrl);
+		return "common/redirect";
+	}
+
 	/////////// 글쓰기/////////////
 	@RequestMapping("/mpaUsr/article/doWrite")
 	@ResponseBody
@@ -67,14 +73,20 @@ public class MpaUsrArticleController {
 
 	/////////// 삭제////////////
 	@RequestMapping("/mpaUsr/article/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id) {
+
+	public String doDelete(HttpServletRequest req, Integer id) {
 
 		if (Util.isEmpty(id)) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
-		////////
-		return articleService.deleteArticleById(id);
+		ResultData rd = articleService.deleteArticleById(id);
+		
+		if (rd.isFail()) {
+			return msgAndBack(req, rd.getMsg());
+		}
+		String redirectUrl = ".../article/list?board=" + rd.getBody().get("board Id");
+		
+		return msgAndReplace(req, rd.getMsg(), redirectUrl);
 	}
 
 	/////////// show////////////
@@ -92,7 +104,6 @@ public class MpaUsrArticleController {
 
 		return "mpaUsr/article/list";
 	}
-
 
 	/////////// 글 show////////////
 	@RequestMapping("/mpaUsr/article/getArticle")
